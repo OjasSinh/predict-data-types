@@ -1,8 +1,8 @@
 /*
- * Supported data type constants
- * Use these instead of string literals for type-safe comparisons
- * @constant
- */
+    * Supported data type constants
+    * Use these instead of string literals for type-safe comparisons
+    * @constant
+    */
 const DataTypes = {
     STRING: 'string',
     NUMBER: 'number',
@@ -28,9 +28,9 @@ const DataTypes = {
 
 
 /*
- * Output format constants for schema generation
- * @constant
- */
+    * Output format constants for schema generation
+    * @constant
+    */
 const Formats = {
     NONE: 'none',
     JSONSCHEMA: 'jsonschema'
@@ -51,7 +51,8 @@ const PATTERNS = {
     MENTION: /^@[A-Za-z0-9][A-Za-z0-9_-]*$/,
     MAC_ADDRESS: /^(?:[0-9a-fA-F]{2}[:-]){5}[0-9a-fA-F]{2}$/,
     HASHTAG: /^#[A-Za-z][A-Za-z0-9_]*$/,
-    MIME: /^[a-z]+\/[a-z0-9.+-]+$/i
+    MIME: /^[a-z]+\/[a-z0-9.+-]+$/i,
+    FILE_EXTENSION: /\.(png|jpe?g|gif|webp|svg|pdf|zip|tar|gz|rar|7z|txt|csv|json|xml|html|css|js)$/i
 };
 
 
@@ -110,10 +111,10 @@ const DATE_FORMATS = [
 ];
 
 /**
- * Parse month name to month index
- * @param {string} monthString - Month name (e.g., 'Jan', 'January')
- * @returns {number|null} Month index (0-11) or null if invalid
- */
+     * Parse month name to month index
+     * @param {string} monthString - Month name (e.g., 'Jan', 'January')
+     * @returns {number|null} Month index (0-11) or null if invalid
+     */
 function parseMonth(monthString) {
     const monthNames = [
         'jan', 'feb', 'mar', 'apr', 'may', 'jun',
@@ -125,10 +126,10 @@ function parseMonth(monthString) {
 }
 
 /**
- * Parse timezone offset string to minutes
- * @param {string} tzString - Timezone string (e.g., '+05:30', '-08:00', 'Z')
- * @returns {number|null} Offset in minutes or null if invalid
- */
+     * Parse timezone offset string to minutes
+     * @param {string} tzString - Timezone string (e.g., '+05:30', '-08:00', 'Z')
+     * @returns {number|null} Offset in minutes or null if invalid
+     */
 function parseTimezone(tzString) {
     if (tzString === 'Z' || tzString === 'z') return 0;
     const match = tzString.match(/^([+-])(\d{2}):?(\d{2})?$/);
@@ -140,11 +141,11 @@ function parseTimezone(tzString) {
 }
 
 /**
- * Parse a date string with a specific format
- * @param {string} input - Date string to parse
- * @param {string} format - Format pattern
- * @returns {Date|null} Parsed Date object or null if invalid
- */
+     * Parse a date string with a specific format
+     * @param {string} input - Date string to parse
+     * @param {string} format - Format pattern
+     * @returns {Date|null} Parsed Date object or null if invalid
+     */
 function parseWithFormat(input, format) {
     const parts = input.trim().split(/[\s\/\-\:\.TZ]+/).filter(p => p);
     const formatParts = format.trim().split(/[\s\/\-\:\.TZ]+/).filter(p => p);
@@ -243,8 +244,8 @@ function parseWithFormat(input, format) {
 
     // Check if date rolled over (invalid date like Feb 30 becomes Mar 2)
     if (date.getFullYear() !== dateValues.year ||
-        date.getMonth() !== dateValues.month ||
-        date.getDate() !== dateValues.day) {
+            date.getMonth() !== dateValues.month ||
+            date.getDate() !== dateValues.day) {
         return null;
     }
 
@@ -252,10 +253,10 @@ function parseWithFormat(input, format) {
 }
 
 /**
- * Try to parse a date string with all supported formats
- * @param {string} input - Date string to parse
- * @returns {Date|null} Parsed Date object or null if invalid
- */
+     * Try to parse a date string with all supported formats
+     * @param {string} input - Date string to parse
+     * @returns {Date|null} Parsed Date object or null if invalid
+     */
 function tryParseDate(input) {
     for (const format of DATE_FORMATS) {
         const date = parseWithFormat(input, format);
@@ -267,10 +268,10 @@ function tryParseDate(input) {
 }
 
 /**
- * Checks if a given value represents a valid date in various formats
- * @param {string} value - The value to check
- * @returns {boolean} True if the value is a valid date, false otherwise
- */
+     * Checks if a given value represents a valid date in various formats
+     * @param {string} value - The value to check
+     * @returns {boolean} True if the value is a valid date, false otherwise
+     */
 function isDate(value) {
     const trimmedValue = value.trim();
 
@@ -283,109 +284,109 @@ function isDate(value) {
 }
 
 /**
- * Checks if a given value represents a boolean (true/false, yes/no, on/off, 1/0)
- * @param {*} val - The value to check
- * @returns {boolean} True if the value is a boolean representation, false otherwise
- */
+     * Checks if a given value represents a boolean (true/false, yes/no, on/off, 1/0)
+     * @param {*} val - The value to check
+     * @returns {boolean} True if the value is a boolean representation, false otherwise
+     */
 function isBoolean(val) {
     if (typeof val === 'string') {
         const lower = val.toLowerCase();
         return lower === 'true' || lower === 'false' ||
-               lower === 'yes' || lower === 'no' ||
-               lower === 'on' || lower === 'off';
+                lower === 'yes' || lower === 'no' ||
+                lower === 'on' || lower === 'off';
     }
     return val === 1 || val === 0;
 }
 
 /**
- * Checks if a given value is a valid URL
- * @param {string} value - The value to check
- * @returns {boolean} True if the value is a valid URL, false otherwise
- */
+     * Checks if a given value is a valid URL
+     * @param {string} value - The value to check
+     * @returns {boolean} True if the value is a valid URL, false otherwise
+     */
 function isURL(value) {
     return PATTERNS.URL.test(value);
 }
 
 /**
- * Checks if a given value is a valid UUID (Version 1-5)
- * @param {string} value - The value to check
- * @returns {boolean} True if the value is a valid UUID, false otherwise
- */
+     * Checks if a given value is a valid UUID (Version 1-5)
+     * @param {string} value - The value to check
+     * @returns {boolean} True if the value is a valid UUID, false otherwise
+     */
 function isUUID(value) {
     return PATTERNS.UUID.test(value);
 }
 
 
 /**
- * Checks if a given value is a valid phone number
- * @param {string} value - The value to check
- * @returns {boolean} True if the value is a valid phone number, false otherwise
- */
+     * Checks if a given value is a valid phone number
+     * @param {string} value - The value to check
+     * @returns {boolean} True if the value is a valid phone number, false otherwise
+     */
 function isPhoneNumber(value) {
     return PATTERNS.PHONE.test(value);
 }
 
 /**
- * Checks if a given value is a valid email address
- * @param {string} value - The value to check
- * @returns {boolean} True if the value is a valid email address, false otherwise
- */
+     * Checks if a given value is a valid email address
+     * @param {string} value - The value to check
+     * @returns {boolean} True if the value is a valid email address, false otherwise
+     */
 function isEmail(value) {
     return PATTERNS.EMAIL.test(value);
 }
 
 /**
- * Checks if a given value is a social media mention (e.g., @username)
- * Allows letters, numbers, underscores, and hyphens after the @,
- * must start with a letter or number.
- * @param {string} value - The value to check
- * @returns {boolean} True if the value is a mention, false otherwise
- */
+     * Checks if a given value is a social media mention (e.g., @username)
+     * Allows letters, numbers, underscores, and hyphens after the @,
+     * must start with a letter or number.
+     * @param {string} value - The value to check
+     * @returns {boolean} True if the value is a mention, false otherwise
+     */
 function isMention(value) {
     return PATTERNS.MENTION.test(value);
 }
 
 /**
- * Checks if a given value is a valid IP address (IPv4 or IPv6)
- * @param {string} value - The value to check
- * @returns {boolean} True if the value is a valid IP address, false otherwise
- */
+     * Checks if a given value is a valid IP address (IPv4 or IPv6)
+     * @param {string} value - The value to check
+     * @returns {boolean} True if the value is a valid IP address, false otherwise
+     */
 function isIPAddress(value) {
     return PATTERNS.IPV4.test(value) || PATTERNS.IPV6.test(value);
 }
 
 /**
- * Checks if a given value is a valid MAC address
- * @param {string} value - The value to check
- * @returns {boolean} True if the value is a valid MAC address, false otherwise
- */
+     * Checks if a given value is a valid MAC address
+     * @param {string} value - The value to check
+     * @returns {boolean} True if the value is a valid MAC address, false otherwise
+     */
 function isMACAddress(value) {
     return PATTERNS.MAC_ADDRESS.test(value);
 }
 
 /**
- * Checks if a given value is a valid hex color code
- * @param {string} value - The value to check
- * @returns {boolean} True if the value is a valid hex color, false otherwise
- */
+     * Checks if a given value is a valid hex color code
+     * @param {string} value - The value to check
+     * @returns {boolean} True if the value is a valid hex color, false otherwise
+     */
 function isHexColor(value) {
     return PATTERNS.HEX_COLOR.test(value);
 }
 
 /**
- * Checks if a given value is a percentage
- * @param {string} value - The value to check
- * @returns {boolean} True if the value is a percentage, false otherwise
- */
+     * Checks if a given value is a percentage
+     * @param {string} value - The value to check
+     * @returns {boolean} True if the value is a percentage, false otherwise
+     */
 function isPercentage(value) {
     return PATTERNS.PERCENTAGE.test(value);
 }
 
 /**
- * Checks if a given value is a currency amount
- * @param {string} value - The value to check
- * @returns {boolean} True if the value is a currency amount, false otherwise
- */
+     * Checks if a given value is a currency amount
+     * @param {string} value - The value to check
+     * @returns {boolean} True if the value is a currency amount, false otherwise
+     */
 function isCurrency(value) {
     return PATTERNS.CURRENCY.test(value);
 }
@@ -427,10 +428,10 @@ function isHashtag(value, options = {}) {
 }
 
 /**
- * Checks if a given value is a valid cron expression
- * @param {string} value - The value to check
- * @returns {boolean} True if the value is a valid cron expression, false otherwise
- */
+     * Checks if a given value is a valid cron expression
+     * @param {string} value - The value to check
+     * @returns {boolean} True if the value is a valid cron expression, false otherwise
+     */
 function isCron(value) {
     const trimmedValue = value.trim();
     const fields = trimmedValue.split(/\s+/);
@@ -460,11 +461,11 @@ function isCron(value) {
 }
 
 /**
- * Validates a single cron field
- * @param {string} field - The field to validate
- * @param {Object} range - The valid range {min, max}
- * @returns {boolean} True if valid, false otherwise
- */
+     * Validates a single cron field
+     * @param {string} field - The field to validate
+     * @param {Object} range - The valid range {min, max}
+     * @returns {boolean} True if valid, false otherwise
+     */
 function isValidCronField(field, range) {
     if (field === '*') {
         return true;
@@ -499,11 +500,11 @@ function isValidCronField(field, range) {
 }
 
 /**
- * Validates a single part of a cron field (before comma split)
- * @param {string} part - The part to validate
- * @param {Object} range - The valid range {min, max}
- * @returns {boolean} True if valid, false otherwise
- */
+     * Validates a single part of a cron field (before comma split)
+     * @param {string} part - The part to validate
+     * @param {Object} range - The valid range {min, max}
+     * @returns {boolean} True if valid, false otherwise
+     */
 function isValidCronPart(part, range) {
     if (part === '*') {
         return true;
@@ -525,11 +526,11 @@ function isValidCronPart(part, range) {
 }
 
 /**
- * Tokenizes a string by splitting on commas while respecting quoted strings and nested objects/arrays
- * Optimized version with improved performance for large inputs
- * @param {string} text - The text to tokenize
- * @returns {string[]} Array of tokens
- */
+     * Tokenizes a string by splitting on commas while respecting quoted strings and nested objects/arrays
+     * Optimized version with improved performance for large inputs
+     * @param {string} text - The text to tokenize
+     * @returns {string[]} Array of tokens
+     */
 function tokenize(text) {
     const tokens = [];
     const textLength = text.length;
@@ -591,11 +592,11 @@ function tokenize(text) {
 }
 
 /**
- * Parses input string into header and data components
- * @param {string} str - The input string
- * @param {boolean} firstRowIsHeader - Whether first row should be treated as headers
- * @returns {{header: string[], data: string[]}} Parsed header and data
- */
+     * Parses input string into header and data components
+     * @param {string} str - The input string
+     * @param {boolean} firstRowIsHeader - Whether first row should be treated as headers
+     * @returns {{header: string[], data: string[]}} Parsed header and data
+     */
 function parseHeaderAndData(str, firstRowIsHeader) {
     let header = '';
     let data = str;
@@ -618,12 +619,12 @@ function parseHeaderAndData(str, firstRowIsHeader) {
 }
 
 /**
- * Detects the data type for a single field value
- * @param {string} value - The value to analyze
- * @param {Object} [options={}] - Detection options
- * @param {boolean} [options.preferHashtagOver3CharHex=false] - Prefer hashtags over 3-char hex colors for ambiguous values like #dev, #bad
- * @returns {string} The detected data type
- */
+     * Detects the data type for a single field value
+     * @param {string} value - The value to analyze
+     * @param {Object} [options={}] - Detection options
+     * @param {boolean} [options.preferHashtagOver3CharHex=false] - Prefer hashtags over 3-char hex colors for ambiguous values like #dev, #bad
+     * @returns {string} The detected data type
+     */
 function detectFieldType(value, options = {}) {
     const trimmedValue = value.trim();
 
@@ -634,7 +635,6 @@ function detectFieldType(value, options = {}) {
     } else if (isCurrency(trimmedValue)) {
         return 'currency';
     } else if (!isNaN(parseFloat(trimmedValue)) && isFinite(trimmedValue) && !PATTERNS.LEADING_ZERO.test(trimmedValue)) {
-        // Numbers, but not those with leading zeros like '01'
         return 'number';
     } else if (isDate(trimmedValue)) {
         return 'date';
@@ -650,12 +650,14 @@ function detectFieldType(value, options = {}) {
         return 'phone';
     } else if (isEmail(trimmedValue)) {
         return 'email';
-    }else if (PATTERNS.MIME.test(trimmedValue)) {
+    } else if (
+        trimmedValue.includes('/') &&
+        PATTERNS.MIME.test(trimmedValue)
+    ) {
         return 'mime';
     } else if (isMention(trimmedValue)) {
         return 'mention';
     } else if (options.preferHashtagOver3CharHex && trimmedValue.length === 4 && isHashtag(trimmedValue, options)) {
-        // When preferring hashtags, check 3-char values as hashtags first
         return 'hashtag';
     } else if (isHexColor(trimmedValue)) {
         return 'color';
@@ -673,12 +675,12 @@ function detectFieldType(value, options = {}) {
 }
 
 /**
- * Processes data fields and assigns types
- * @param {string[]} data - Array of data values
- * @param {string[]} header - Array of header names
- * @param {boolean} firstRowIsHeader - Whether headers are being used
- * @returns {Object<string, string>} Object mapping field names to types
- */
+     * Processes data fields and assigns types
+     * @param {string[]} data - Array of data values
+     * @param {string[]} header - Array of header names
+     * @param {boolean} firstRowIsHeader - Whether headers are being used
+     * @returns {Object<string, string>} Object mapping field names to types
+     */
 function processFields(data, header, firstRowIsHeader) {
     const types = {};
 
@@ -698,22 +700,22 @@ function processFields(data, header, firstRowIsHeader) {
 }
 
 /**
- * Predicts data types for comma-separated values or structured data
- * @param {string} str - The input string to analyze
- * @param {boolean} [firstRowIsHeader=false] - Whether to treat the first row as column headers
- * @returns {Object<string, string>} Object mapping field names/values to their predicted data types
- * @throws {Error} When input is null, undefined, or not a string
- *
- * @example
- * // Basic usage
- * predictDataTypes('John, 30, true, 2023-01-01')
- * // Returns: { 'John': 'string', '30': 'number', 'true': 'boolean', '2023-01-01': 'date' }
- *
- * @example
- * // With headers
- * predictDataTypes('name,age,active\nJohn,30,true', true)
- * // Returns: { 'name': 'string', 'age': 'number', 'active': 'boolean' }
- */
+     * Predicts data types for comma-separated values or structured data
+     * @param {string} str - The input string to analyze
+     * @param {boolean} [firstRowIsHeader=false] - Whether to treat the first row as column headers
+     * @returns {Object<string, string>} Object mapping field names/values to their predicted data types
+     * @throws {Error} When input is null, undefined, or not a string
+     *
+     * @example
+     * // Basic usage
+     * predictDataTypes('John, 30, true, 2023-01-01')
+     * // Returns: { 'John': 'string', '30': 'number', 'true': 'boolean', '2023-01-01': 'date' }
+     *
+     * @example
+     * // With headers
+     * predictDataTypes('name,age,active\nJohn,30,true', true)
+     * // Returns: { 'name': 'string', 'age': 'number', 'active': 'boolean' }
+     */
 function predictDataTypes(str, firstRowIsHeader = false) {
     // Input validation
     if (str === null || str === undefined) {
@@ -749,11 +751,11 @@ function predictDataTypes(str, firstRowIsHeader = false) {
 }
 
 /**
- * Converts our schema format to JSON Schema
- * @param {Object} schema - Schema object with field names and types
- * @returns {Object} JSON Schema object
- * @private
- */
+     * Converts our schema format to JSON Schema
+     * @param {Object} schema - Schema object with field names and types
+     * @returns {Object} JSON Schema object
+     * @private
+     */
 function toJSONSchema(schema) {
     // Map our data types to JSON Schema types
     const typeMap = {
@@ -823,21 +825,21 @@ function toJSONSchema(schema) {
 }
 
 /**
- * Infers data type(s) from any input - strings, arrays, objects, or array of objects
- * @param {string|string[]|Object|Array<Object>} input - Value(s) to analyze
- * @param {string} [format=Formats.NONE] - Output format: Formats.NONE (default) or Formats.JSONSCHEMA
- * @param {Object} [options={}] - Detection options
- * @param {boolean} [options.preferHashtagOver3CharHex=false] - Prefer hashtags over 3-char hex colors for ambiguous values like #dev, #bad
- * @returns {string|Object} DataType for primitives, or schema object for objects
- * @example
- * infer("2024-01-01") // → 'date'
- * infer(["1", "2", "3"]) // → 'number'
- * infer({ name: "Alice", age: "25" }) // → { name: 'string', age: 'number' }
- * infer({ name: "Alice", age: "25" }, Formats.JSONSCHEMA) // → { type: 'object', properties: {...}, required: [...] }
- * infer([{ name: "Alice" }, { name: "Bob" }]) // → { name: 'string' }
- * infer("#dev") // → 'color' (default: 3-char hex takes priority)
- * infer("#dev", Formats.NONE, { preferHashtagOver3CharHex: true }) // → 'hashtag'
- */
+     * Infers data type(s) from any input - strings, arrays, objects, or array of objects
+     * @param {string|string[]|Object|Array<Object>} input - Value(s) to analyze
+     * @param {string} [format=Formats.NONE] - Output format: Formats.NONE (default) or Formats.JSONSCHEMA
+     * @param {Object} [options={}] - Detection options
+     * @param {boolean} [options.preferHashtagOver3CharHex=false] - Prefer hashtags over 3-char hex colors for ambiguous values like #dev, #bad
+     * @returns {string|Object} DataType for primitives, or schema object for objects
+     * @example
+     * infer("2024-01-01") // → 'date'
+     * infer(["1", "2", "3"]) // → 'number'
+     * infer({ name: "Alice", age: "25" }) // → { name: 'string', age: 'number' }
+     * infer({ name: "Alice", age: "25" }, Formats.JSONSCHEMA) // → { type: 'object', properties: {...}, required: [...] }
+     * infer([{ name: "Alice" }, { name: "Bob" }]) // → { name: 'string' }
+     * infer("#dev") // → 'color' (default: 3-char hex takes priority)
+     * infer("#dev", Formats.NONE, { preferHashtagOver3CharHex: true }) // → 'hashtag'
+     */
 function infer(input, format = Formats.NONE, options = {}) {
     if (input === null || input === undefined) {
         throw new Error('Input cannot be null or undefined');
@@ -906,11 +908,11 @@ function infer(input, format = Formats.NONE, options = {}) {
 }
 
 /**
- * Helper function to infer schema from objects
- * @param {Array<Object>} rows - Array of objects to analyze
- * @param {Object} [options={}] - Detection options
- * @returns {Object} Schema with field names as keys and types as values
- */
+     * Helper function to infer schema from objects
+     * @param {Array<Object>} rows - Array of objects to analyze
+     * @param {Object} [options={}] - Detection options
+     * @returns {Object} Schema with field names as keys and types as values
+     */
 function inferSchemaFromObjects(rows, options = {}) {
     if (!rows.every(row => row !== null && typeof row === 'object' && !Array.isArray(row))) {
         throw new Error('All items must be objects');

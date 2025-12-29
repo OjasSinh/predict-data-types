@@ -240,6 +240,52 @@ describe('predictDataTypes', () => {
         });
     });
 
+    describe('MIME type detection', () => {
+        it('should detect valid mime types', () => {
+            const text = 'image/png, application/pdf, text/html';
+            const types = predictDataTypes(text);
+
+            expect(types).to.deep.equal({
+                'image/png': 'mime',
+                'application/pdf': 'mime',
+                'text/html': 'mime'
+            });
+        });
+
+        it('should detect mime types in mixed content', () => {
+            const text = 'image/jpeg, https://example.com, 123';
+            const types = predictDataTypes(text);
+
+            expect(types).to.deep.equal({
+                'image/jpeg': 'mime',
+                'https://example.com': 'url',
+                '123': 'number'
+            });
+        });
+
+        it('should not detect file extensions as mime', () => {
+            const text = 'image.png, document.pdf';
+            const types = predictDataTypes(text);
+
+            expect(types).to.deep.equal({
+                'image.png': 'string',
+                'document.pdf': 'string'
+            });
+        });
+
+        it('should not detect invalid slash strings as mime', () => {
+            const text = 'a/b/c, foo/bar/baz';
+            const types = predictDataTypes(text);
+
+            expect(types).to.deep.equal({
+                'a/b/c': 'string',
+                'foo/bar/baz': 'string'
+            });
+        });
+    });
+
+
+
     // Date format tests
     describe('Date detection', () => {
         it('should detect various date formats', () => {
