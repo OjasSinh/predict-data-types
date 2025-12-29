@@ -1,4 +1,4 @@
-/**
+/*
  * Supported data type constants
  * Use these instead of string literals for type-safe comparisons
  * @constant
@@ -23,11 +23,11 @@ const DataTypes = {
     CRON: 'cron',
     HASHTAG: 'hashtag',
     MIME: 'mime'
-
 };
 
 
-/**
+
+/*
  * Output format constants for schema generation
  * @constant
  */
@@ -52,8 +52,8 @@ const PATTERNS = {
     MAC_ADDRESS: /^(?:[0-9a-fA-F]{2}[:-]){5}[0-9a-fA-F]{2}$/,
     HASHTAG: /^#[A-Za-z][A-Za-z0-9_]*$/,
     MIME: /^[a-z]+\/[a-z0-9.+-]+$/i
-
 };
+
 
 // Date format patterns supported for parsing (from re-date-parser + extensions)
 const DATE_FORMATS = [
