@@ -2,7 +2,7 @@
     * Supported data type constants
     * Use these instead of string literals for type-safe comparisons
     * @constant
-    */
+*/
 const DataTypes = {
     STRING: 'string',
     NUMBER: 'number',
@@ -47,7 +47,7 @@ const PATTERNS = {
     IPV6: /^(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$|^::(?:[0-9a-fA-F]{1,4}:){0,6}[0-9a-fA-F]{1,4}$|^(?:[0-9a-fA-F]{1,4}:){1,6}:$|^(?:[0-9a-fA-F]{1,4}:)(?::[0-9a-fA-F]{1,4}){1,6}$/,
     HEX_COLOR: /^#(?:[0-9a-fA-F]{3}){1,2}$/,
     PERCENTAGE: /^-?\d+(?:\.\d+)?%$/,
-    CURRENCY: /^[$€£¥₹][\d,]+(?:\.\d{1,2})?$|^[\d,]+(?:\.\d{1,2})?[$€£¥₹]$/,
+    CURRENCY: /^[$][\d,]+(?:\.\d{1,2})?$|^[\d,]+(?:\.\d{1,2})?[$]$/,
     MENTION: /^@[A-Za-z0-9][A-Za-z0-9_-]*$/,
     MAC_ADDRESS: /^(?:[0-9a-fA-F]{2}[:-]){5}[0-9a-fA-F]{2}$/,
     HASHTAG: /^#[A-Za-z][A-Za-z0-9_]*$/,
